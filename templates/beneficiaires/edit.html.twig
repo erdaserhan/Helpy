@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Bénéficiaire{% endblock %}
+
+{% block body %}
+    {% include 'beneficiaires/_menu.html.twig' %}
+        <main>
+            <div class="container">
+                <div class="row">
+                    <div class="col-8 col-sm-8 col-md-6 col-lg-8 col-xl-8">
+                        <h1>Modifier Bénéficiaire</h1>
+                        {{ include('beneficiaires/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
+                        <a href="{{ path('app_beneficiaires_index', {'personnel': personnel }) }}"><button class="btn btn-warning my-2">Back to list</button></a>
+                        {{ include('beneficiaires/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </main>
+    {% include 'beneficiaires/_footer.html.twig' %}
+{% endblock %}

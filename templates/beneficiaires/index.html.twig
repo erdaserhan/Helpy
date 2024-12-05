@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Beneficiaire index{% endblock %}
+
+{% block body %}
+    {% block nav %}
+        {% include 'beneficiaires/_menu.html.twig' %}
+            <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5">
+                <div class="container ">
+                    <div class="row">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-8 col-sm-8 col-md-6 col-lg-12 col-xl-12 mb-5 personnelForm">
+                                    {{ form_start(form) }}
+                                    {{ form_widget(form) }}
+                                        <button type="submit" class="btn btn-primary mt-2 mt-sm-3 mt-md-3 mt-lg-3">{{ button_label|default('Chercher') }}</button>
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </div>
+{#                            {% component('PersonnelSearch') %}{% endcomponent %}#}
+                        <h1>Bénéficiaires</h1>
+                        <div class="table-responsive tableOverflow overflow-auto border border-2 p-4 rounded-4">
+                            <a href="{{ path('app_beneficiaires_new') }}"><button class="btn btn-primary">Nouveau bénéficiaire</button></a>
+                            <table class="table table-hover mt-3">
+                                <thead>
+                                <tr>
+                                    <th>Bénéficiaire</th>
+                                    <th>Lien de parenté</th>
+                                    <th>Date de naissance</th>
+                                    <th>Date Lunette</th>
+                                    <th>Modifier</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for beneficiaire in beneficiaires %}
+                                    <tr>
+                                        <td>{{ beneficiaire.nomPrenom }}</td>
+                                        <td>{{ beneficiaire.lien }}</td>
+                                        <td>{{ beneficiaire.dateNaissance ? beneficiaire.dateNaissance|date('d/m/Y') : '' }} ({{ beneficiaire.age }} ans)</td>
+                                        <td>{{ beneficiaire.dateLunette ? beneficiaire.dateLunette|date('d/m/Y') : '' }}</td>
+                                        <td>
+{#                                                <a href="{{ path('app_beneficiaires_show', {'id': beneficiaire.id}) }}">show</a>#}
+                                            <a href="{{ path('app_beneficiaires_edit', {'personnel': personnel, 'id': beneficiaire.id}) }}"><button class="btn btn-warning">Modifier</button></a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="6">Pas de Bénéficiaire</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        {% include 'beneficiaires/_footer.html.twig' %}
+    {% endblock %}
+{% endblock %}

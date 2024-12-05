@@ -1,0 +1,96 @@
+<a href="#main" class="visually-hidden-focusable position-absolute z-1 text-primary bg-white p-1">Skip to main content</a>
+<div class="container-fluid p-0">
+    <nav class="navbar d-flex justify-content-end bg-primary p-1">
+        <button id="sidebarToggle"
+                data-sidebar-toggle-target="toggle"
+                {{ stimulus_controller('sidebar-toggle') }}
+                aria-expanded="true" aria-label="Fermer le menu"
+                data-bs-target="#sidebar"
+                data-bs-toggle="collapse" class="btn btn-primary me-lg-1 me-sm-auto me-md-auto me-auto align-self-center">
+            <i class="bi bi-list fs-3 d-flex" aria-hidden="true"></i>
+        </button>
+        <a class="btn btn-primary p-1 align-self-center me-2 me-sm-auto me-md-auto me-lg-auto d-flex align-items-center"
+           href="./" aria-label="Helpy - Aller à l'accueil" id="helpyMenu">
+            <img src="{{ asset('images/helpyLogo.png') }}" id="imageLogo" class="me-1"
+                 alt="Logo Helpy: un pélican souriant">
+            <span id="helpy" class="fs-4 fw-bold">Helpy</span>
+        </a>
+        <div class="dropdown ms-2 align-self-center buttons">
+            <button href="#" class="text-white dropdown-toggle btn btn-primary align-middle"
+                    data-bs-toggle="dropdown" aria-expanded="true">
+                Nom d'utilisateur
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Se déconnecter</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto px-0">
+            <div id="sidebar"
+                 data-sidebar-toggle-target="sidebar"
+                    {{ stimulus_controller('viewport-sidebar') }}
+                 class="collapse collapse-horizontal show border-end">
+                <div id="sidebar-nav" aria-label="Menu" class="list-group border-0 rounded-0 text-sm-start">
+                    <nav>
+                        <ul class="list-group">
+                            <li>
+                                <a href="#" data-bs-parent="#sidebar"
+                                   class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate">
+                                    <i class="bi bi-chevron-right me-1" aria-hidden="true"></i>
+                                    <span>Interventions</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar">
+                                    <i class="bi bi-chevron-right me-1" aria-hidden="true"></i>
+                                    <span>Consultations</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_beneficiaires_index', {'personnel': personnel }) }}" class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate"
+                                   data-bs-parent="#sidebar">
+                                    <i class="bi bi-chevron-right me-1" aria-hidden="true"></i>
+                                    <span>Bénéficiaires</span>
+                                </a>
+                            <li>
+                                <a href="#"
+                                   class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar">
+                                    <i class="bi bi-chevron-right me-1" aria-hidden="true"></i>
+                                    <span>Signalétique</span>
+                                </a>
+                            </li>
+                            <li><a href="#"
+                                   class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate"
+                                   data-bs-parent="#sidebar"><i class="bi bi-chevron-right me-1" aria-hidden="true"></i>
+                                    <span>Fête des enfants</span>
+                                </a>
+                            </li>
+                            <li><a href="#"
+                                   class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate"
+                                   data-bs-parent="#sidebar"><i class="bi bi-chevron-right me-1" aria-hidden="true"></i>
+                                    <span>Global pour l'année 2024</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <hr class="d-md-none">
+                    <div class="d-md-none">
+                        <div class="dropdown ms-2 align-self-center">
+                            <button href="#" class="dropdown-toggle btn btn-outline-primary align-middle"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                Nom d'utilisateur
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Se déconnecter</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

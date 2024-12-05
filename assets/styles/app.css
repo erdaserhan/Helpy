@@ -1,3 +1,35 @@
-body {
-    background-color: skyblue;
+/*import '@symfony/ux-live-component/styles/live.css';*/
+
+#imageLogo {
+    width: 2.5rem;
+}
+
+#sidebar{
+    height: calc(100vh - 4rem);
+}
+
+@media (prefers-reduced-motion) {
+    #sidebarToggle i {
+        transition: none;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .buttons {
+        display: none;
+    }
+}
+
+option, .item {
+    background-color: #feffff;
+}
+
+.personnelForm>form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.personnelForm>form>div {
+    width: 20em;
 }
