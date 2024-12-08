@@ -32,8 +32,8 @@ class InterventionsType extends AbstractType
                 'choice_label' => 'id',
             ])
             ->add('type', EntityType::class, [
-                'class' => self::class,
-                'choice_label' => 'id',
+                'class' => InterventionType::class,
+                'choice_label' => 'name',
             ])
             ->add('beneficiaire', EntityType::class, [
                 'class' => Beneficiaire::class,

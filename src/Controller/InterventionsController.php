@@ -15,10 +15,16 @@ use Symfony\Component\Routing\Attribute\Route;
 final class InterventionsController extends AbstractController
 {
     #[Route(name: 'app_interventions_index', methods: ['GET'])]
-    public function index(InterventionRepository $interventionRepository): Response
+    public function index(
+        InterventionRepository $interventionRepository,
+        Request $request
+    ): Response
     {
+
+        $interventions = $interventionRepository->findAll();
+
         return $this->render('interventions/index.html.twig', [
-            'interventions' => $interventionRepository->findAll(),
+            'interventions' => $interventions,
         ]);
     }
 
@@ -79,4 +85,3 @@ final class InterventionsController extends AbstractController
         return $this->redirectToRoute('app_interventions_index', [], Response::HTTP_SEE_OTHER);
     }
 }
-    
