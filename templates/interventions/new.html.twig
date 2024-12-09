@@ -1,11 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Intervention{% endblock %}
+{% block title %}Nouvelle Intervention{% endblock %}
 
 {% block body %}
-    <h1>Create new Intervention</h1>
-
-    {{ include('interventions/_form.html.twig') }}
-
-    <a href="{{ path('app_interventions_index') }}">back to list</a>
+    {% include 'beneficiaires/_menu.html.twig' %}
+    <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 offset-lg-2">
+                    <h1>Nouvelle Intervention</h1>
+                    {{ include('interventions/_form.html.twig') }}
+                    <a href="{{ path('app_interventions_index', {'personnel': personnel.id|default }) }}" class="btn btn-warning mt-2">Annuler</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% include 'beneficiaires/_footer.html.twig' %}
 {% endblock %}

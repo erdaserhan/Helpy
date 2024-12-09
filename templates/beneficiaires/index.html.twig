@@ -50,7 +50,7 @@
                                         <td>{{ beneficiaire.dateNaissance ? beneficiaire.dateNaissance|date('d/m/Y') : '' }} ({{ beneficiaire.age }} ans)</td>
                                         <td>{{ beneficiaire.dateLunette ? beneficiaire.dateLunette|date('d/m/Y') : '' }}</td>
                                         <td>
-                                            <a href="{{ path('app_beneficiaires_edit', {'id': beneficiaire.id }) }}"><button class="btn btn-warning">Modifier</button></a>
+                                            <a href="{{ path('app_beneficiaires_edit', {'id': beneficiaire.id }) }}" class="btn btn-warning">Modifier</a>
                                         </td>
                                     </tr>
                                 {% else %}
