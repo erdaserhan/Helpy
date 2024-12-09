@@ -44,11 +44,12 @@ final class BeneficiairesController extends AbstractController
 
     #[Route('/new', name: 'app_beneficiaires_new', methods: ['GET', 'POST'])]
     public function new(
-        #[MapQueryParameter] ?int $personnel,
         Request $request,
         EntityManagerInterface $entityManager,
         PersonnelRepository $personnelRepository
     ): Response {
+
+        $personnel = $request->query->get('personnel');
 
         $beneficiaire = new Beneficiaire();
         if ($personnel !== null) {
