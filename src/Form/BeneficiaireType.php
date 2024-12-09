@@ -19,8 +19,7 @@ class BeneficiaireType extends AbstractType
             ->add('nomPrenom')
             ->add('dateNaissance', DateType::class, [
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
-                'required' => false,
+                'input' => 'datetime',
             ])
             ->add('lien')
             ->add('dateLunette', DateType::class, [
@@ -38,6 +37,9 @@ class BeneficiaireType extends AbstractType
                 },
                 'autocomplete' => true,
                 'placeholder' => "Choix d'une personne",
+                'attr' => [
+                    'aria-label' => 'Chercher un personnel',
+                ],
             ])
         ;
     }

@@ -4,13 +4,13 @@
 
 {% block body %}
     {% include 'beneficiaires/_menu.html.twig' %}
-        <main>
+        <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5">
             <div class="container">
                 <div class="row">
-                    <div class="col-8 col-sm-8 col-md-6 col-lg-8 col-xl-8">
+                    <div class="col-8 col-sm-8 col-md-6 col-lg-8 col-xl-8 offset-lg-2">
                         <h1>Modifier Bénéficiaire</h1>
-                        {{ include('beneficiaires/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
-                        <a href="{{ path('app_beneficiaires_index', {'personnel': personnel }) }}"><button class="btn btn-warning my-2">Back to list</button></a>
+                        {{ include('beneficiaires/_form.html.twig') }}
+                        <a href="{{ path('app_beneficiaires_index', {'personnel': personnel.id }) }}" class="btn btn-warning my-2">Back to list</a>
                         {{ include('beneficiaires/_delete_form.html.twig') }}
                     </div>
                 </div>

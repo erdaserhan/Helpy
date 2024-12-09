@@ -8,6 +8,7 @@ use App\Entity\Beneficiaire;
 use App\Form\BeneficiaireType;
 use App\Form\SelectPersonnelType;
 use App\Repository\BeneficiaireRepository;
+use App\Repository\PersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,23 +21,17 @@ final class BeneficiairesController extends AbstractController
 {
     #[Route(name: 'app_beneficiaires_index', methods: ['GET'])]
     public function index(
-        #[MapQueryParameter] ?int $personnel,
         BeneficiaireRepository $beneficiaireRepository,
         Request $request,
     ): Response {
+
+        $personnel = $request->query->get('personnel');
 
         $form = $this->createForm(SelectPersonnelType::class, options: [
             'method' => 'GET',
         ]);
 
         $form->handleRequest($request);
-
-        // $selectedPersonnel = $form->getData();
-        // if (is_array($selectedPersonnel) && array_key_exists('personnel', $selectedPersonnel)) {
-        //     $selectedPersonnel = $selectedPersonnel['personnel'];
-        // } else {
-        //     $selectedPersonnel = null;
-        // }
 
         $beneficiaires = $beneficiaireRepository->findBy(['personnel' => $personnel], ['nomPrenom' => 'ASC']);
 
@@ -48,9 +43,17 @@ final class BeneficiairesController extends AbstractController
     }
 
     #[Route('/new', name: 'app_beneficiaires_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(
+        #[MapQueryParameter] ?int $personnel,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        PersonnelRepository $personnelRepository
+    ): Response {
+
         $beneficiaire = new Beneficiaire();
+        if ($personnel !== null) {
+            $beneficiaire->setPersonnel($personnelRepository->find($personnel));
+        }
         $form = $this->createForm(BeneficiaireType::class, $beneficiaire);
         $form->handleRequest($request);
 
@@ -58,12 +61,15 @@ final class BeneficiairesController extends AbstractController
             $entityManager->persist($beneficiaire);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_beneficiaires_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_beneficiaires_index', [
+                'personnel' => $beneficiaire->getPersonnel()?->getId(),
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('beneficiaires/new.html.twig', [
             'beneficiaire' => $beneficiaire,
             'form' => $form,
+            'personnel' => $beneficiaire->getPersonnel(),
         ]);
     }
 
@@ -77,7 +83,6 @@ final class BeneficiairesController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_beneficiaires_edit', methods: ['GET', 'POST'])]
     public function edit(
-        #[MapQueryParameter] ?int $personnel,
         Request $request,
         Beneficiaire $beneficiaire,
         EntityManagerInterface $entityManager
@@ -89,13 +94,15 @@ final class BeneficiairesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_beneficiaires_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_beneficiaires_index', [
+                'personnel' => $beneficiaire->getPersonnel()?->getId(),
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('beneficiaires/edit.html.twig', [
             'beneficiaire' => $beneficiaire,
             'form' => $form,
-            'personnel' => $personnel,
+            'personnel' => $beneficiaire->getPersonnel(),
         ]);
     }
 
@@ -105,11 +112,18 @@ final class BeneficiairesController extends AbstractController
         Beneficiaire $beneficiaire,
         EntityManagerInterface $entityManager
     ): Response {
+
         if ($this->isCsrfTokenValid('delete' . $beneficiaire->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($beneficiaire);
             $entityManager->flush();
+            $this->addFlash('success', 'Bénéficiaire a été supprimer.');
+        } else {
+            $this->addFlash('failure', 'Item could not deleted.');
         }
 
-        return $this->redirectToRoute('app_beneficiaires_index', [], Response::HTTP_SEE_OTHER);
+
+        return $this->redirectToRoute('app_beneficiaires_index', [
+            'personnel' => $beneficiaire->getPersonnel()?->getId(),
+        ], Response::HTTP_SEE_OTHER);
     }
 }

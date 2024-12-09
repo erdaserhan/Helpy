@@ -18,10 +18,19 @@
                                 </div>
                             </div>
                         </div>
-{#                            {% component('PersonnelSearch') %}{% endcomponent %}#}
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {% for message in app.flashes('failure') %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                         <h1>Bénéficiaires</h1>
                         <div class="table-responsive tableOverflow overflow-auto border border-2 p-4 rounded-4">
-                            <a href="{{ path('app_beneficiaires_new') }}"><button class="btn btn-primary">Nouveau bénéficiaire</button></a>
+                            <a href="{{ path('app_beneficiaires_new', {'personnel': personnel }) }}" class="btn btn-primary">Nouveau bénéficiaire</a>
                             <table class="table table-hover mt-3">
                                 <thead>
                                 <tr>
@@ -40,8 +49,7 @@
                                         <td>{{ beneficiaire.dateNaissance ? beneficiaire.dateNaissance|date('d/m/Y') : '' }} ({{ beneficiaire.age }} ans)</td>
                                         <td>{{ beneficiaire.dateLunette ? beneficiaire.dateLunette|date('d/m/Y') : '' }}</td>
                                         <td>
-{#                                                <a href="{{ path('app_beneficiaires_show', {'id': beneficiaire.id}) }}">show</a>#}
-                                            <a href="{{ path('app_beneficiaires_edit', {'personnel': personnel, 'id': beneficiaire.id}) }}"><button class="btn btn-warning">Modifier</button></a>
+                                            <a href="{{ path('app_beneficiaires_edit', {'id': beneficiaire.id }) }}"><button class="btn btn-warning">Modifier</button></a>
                                         </td>
                                     </tr>
                                 {% else %}

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BeneficiaireRepository::class)]
 #[ORM\Table(name: 'HelpyBénéficiaires')]
@@ -40,10 +41,10 @@ class Beneficiaire
     #[ORM\Column(
         name: 'BénéficiaireDateNaissance',
         type: 'datetime',
-        nullable: true,
         options: ['default' => '0000-00-00 00:00:00'],
     )]
-    private \DateTime $dateNaissance;
+    #[Assert\NotBlank]
+    private ?\DateTime $dateNaissance = null;
 
     #[ORM\Column(
         name: 'BénéficiaireLien',
@@ -82,7 +83,7 @@ class Beneficiaire
 
     public function getDateNaissance(): \DateTime|null
     {
-        if (\DateTime::createFromFormat('Y-m-d', $this->dateNaissance->format('Y-m-d')) === false) {
+        if (\DateTime::createFromFormat('Y-m-d', $this->dateNaissance?->format('Y-m-d') ?? '') === false) {
             return null;
         } else {
             return $this->dateNaissance;
@@ -149,7 +150,7 @@ class Beneficiaire
         return $this;
     }
 
-    public function setDateNaissance(\DateTime $dateNaissance): self
+    public function setDateNaissance(?\DateTime $dateNaissance): self
     {
         $this->dateNaissance = $dateNaissance;
 

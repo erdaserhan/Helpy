@@ -1,20 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier Bénéficiaire{% endblock %}
+{% block title %}New Beneficiaire{% endblock %}
 
 {% block body %}
     {% include 'beneficiaires/_menu.html.twig' %}
-        <main>
-            <div class="container">
-                <div class="row">
-                    <div class="col-8 col-sm-8 col-md-6 col-lg-8 col-xl-8">
-                        <h1>Modifier Bénéficiaire</h1>
-                        {{ include('beneficiaires/_form.html.twig') }}
-                        <a href="{{ path('app_beneficiaires_index') }}">back to list</a>
-                    </div>
+    <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 offset-lg-2">
+                    <h1>Nouveau Bénéficiaire</h1>
+                    {{ include('beneficiaires/_form.html.twig') }}
+                    <a href="{{ path('app_beneficiaires_index', {'personnel': personnel.id|default }) }}"><button class="btn btn-warning mt-2">back to list</button></a>
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
     {% include 'beneficiaires/_footer.html.twig' %}
 {% endblock %}
-
