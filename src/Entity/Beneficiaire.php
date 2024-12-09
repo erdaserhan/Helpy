@@ -103,7 +103,7 @@ class Beneficiaire
         $annee = $now['year'];
         $mois = $now['mon'];
         $jour = $now['mday'];
-        $date = $this->dateNaissance->format('Y-m-d');
+        $date = $this->dateNaissance?->format('Y-m-d') ?? '';
         $anneenaissance = substr($date, 0, 4);
         $moisnaissance = substr($date, 5, 2);
         $journaissance = substr($date, 8, 2);
