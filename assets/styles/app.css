@@ -33,3 +33,13 @@ option, .item {
 .personnelForm>form>div {
     width: 20em;
 }
+
+.clear-button {
+    background: red !important;
+    font-size: x-large;
+    top: 40% !important;
+}
+
+.plugin-clear_button  {
+    padding: unset !important;
+}
