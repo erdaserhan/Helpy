@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/beneficiaires')]
@@ -61,6 +60,7 @@ final class BeneficiairesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($beneficiaire);
             $entityManager->flush();
+            $this->addFlash('success', 'Le bénéficiaire a été crée.');
 
             return $this->redirectToRoute('app_beneficiaires_index', [
                 'personnel' => $beneficiaire->getPersonnel()?->getId(),
@@ -94,6 +94,7 @@ final class BeneficiairesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('success', 'Le bénéficiaire a été modifié.');
 
             return $this->redirectToRoute('app_beneficiaires_index', [
                 'personnel' => $beneficiaire->getPersonnel()?->getId(),
@@ -117,11 +118,10 @@ final class BeneficiairesController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $beneficiaire->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($beneficiaire);
             $entityManager->flush();
-            $this->addFlash('success', 'Bénéficiaire a été supprimer.');
+            $this->addFlash('success', 'Le bénéficiaire a été supprimé.');
         } else {
-            $this->addFlash('failure', 'Item could not deleted.');
+            $this->addFlash('failure', "Le bénéficiaire n'a pas été supprimé.");
         }
-
 
         return $this->redirectToRoute('app_beneficiaires_index', [
             'personnel' => $beneficiaire->getPersonnel()?->getId(),
