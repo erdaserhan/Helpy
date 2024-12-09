@@ -1,0 +1,17 @@
+<div {{ attributes }}>
+    PersonnelSearch component
+    <input
+        type="search"
+        data-model="query"
+        name="query"
+    >
+    <button type="button" {{ live_action('testAction') }}>Test</button>
+
+    {% if this.personnels is not empty %}
+    <select class="form-select mb-5 mt-2" aria-label="Default select example">
+        {% for personnel in this.personnels %}
+            <option value="1">{{ personnel.nom }} {{ personnel.prenom }}</option>
+        {% endfor %}
+    </select>
+    {% endif %}
+</div>
