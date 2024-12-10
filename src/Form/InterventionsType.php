@@ -18,7 +18,7 @@ class InterventionsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder        
+        $builder
             ->add('type', EntityType::class, [
                 'class' => InterventionType::class,
                 'choice_label' => 'name',
@@ -39,7 +39,7 @@ class InterventionsType extends AbstractType
                 'widget' => 'single_text',
                 'input' => 'datetime',
             ])
-            ->add('montantRealise')            
+            ->add('montantRealise')
             ->add('divers')
             ->add('pieceNo')
             ->add('extraitNo')

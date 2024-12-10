@@ -22,8 +22,7 @@ final class InterventionsController extends AbstractController
     public function index(
         InterventionRepository $interventionRepository,
         Request $request
-    ): Response
-    {
+    ): Response {
 
         $personnel = $request->query->get('personnel');
 
@@ -44,14 +43,13 @@ final class InterventionsController extends AbstractController
 
     #[Route('/new', name: 'app_interventions_new', methods: ['GET', 'POST'])]
     public function new(
-        Request $request, 
+        Request $request,
         EntityManagerInterface $entityManager,
         PersonnelRepository $personnelRepository
-        ): Response
-    {
+    ): Response {
 
         $personnel = $request->query->get('personnel');
-        
+
         $intervention = new Intervention();
         if ($personnel !== null) {
             $intervention->setPersonnel($personnelRepository->find($personnel));
@@ -84,11 +82,10 @@ final class InterventionsController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_interventions_edit', methods: ['GET', 'POST'])]
     public function edit(
-        Request $request, 
-        Intervention $intervention, 
+        Request $request,
+        Intervention $intervention,
         EntityManagerInterface $entityManager
-        ): Response
-    {
+    ): Response {
         $form = $this->createForm(InterventionsType::class, $intervention);
         $form->handleRequest($request);
 
@@ -109,9 +106,12 @@ final class InterventionsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_interventions_delete', methods: ['POST'])]
-    public function delete(Request $request, Intervention $intervention, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$intervention->getId(), $request->getPayload()->getString('_token'))) {
+    public function delete(
+        Request $request,
+        Intervention $intervention,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if ($this->isCsrfTokenValid('delete' . $intervention->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($intervention);
             $entityManager->flush();
             $this->addFlash('success', 'L\'intervention a été supprimée.');
