@@ -28,14 +28,14 @@
                                 {{ message }}
                             </div>
                         {% endfor %}
-                        <h1>Bénéficiaires</h1>
+                        <h1>Interventions</h1>
                         <div class="table-responsive tableOverflow overflow-auto border border-2 p-4 rounded-4">
-                            <a href="{{ path('app_interventions_new', {'personnel': personnel }) }}" class="btn btn-primary">Nouveau intervention</a>
+                            <a href="{{ path('app_interventions_new', {'personnel': personnel }) }}" class="btn btn-primary">Nouvelle intervention</a>
                             <table class="table table-hover mt-3">
                                 <thead>
                                     <tr>
                                         <th>Intervention</th>
-                                        <th>Bénéficiaire<th> 
+                                        <th>Bénéficiaire</th> 
                                         <th>Date réalisé</th>
                                         <th>Montant payé</th>
                                         <th>Date référence</th>

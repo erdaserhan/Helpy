@@ -57,11 +57,6 @@ class InterventionsType extends AbstractType
                 'attr' => [
                     'aria-label' => 'Chercher un personnel',
                 ],
-                'autocomplete' => true,
-                'placeholder' => "Choix d'une personne",
-                'attr' => [
-                    'aria-label' => 'Chercher un personnel',
-                ],
             ])
         ;
     }

@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Beneficiaire{% endblock %}
+{% block title %}Nouvelle Intervention{% endblock %}
 
 {% block body %}
     {% include 'beneficiaires/_menu.html.twig' %}
-    <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5">
+    <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5 mb-5">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 offset-lg-2">
-                    <h1>Nouveau Bénéficiaire</h1>
-                    {{ include('beneficiaires/_form.html.twig') }}
-                    <a href="{{ path('app_beneficiaires_index', {'personnel': personnel.id|default }) }}"><button class="btn btn-warning mt-2">back to list</button></a>
+                    <h1>Nouvelle Intervention</h1>
+                    {{ include('interventions/_form.html.twig') }}
+                    <a href="{{ path('app_interventions_index', {'personnel': personnel.id|default }) }}" class="btn btn-warning mt-2">Annuler</a>
                 </div>
             </div>
         </div>
