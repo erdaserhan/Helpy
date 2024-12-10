@@ -33,7 +33,7 @@
             <div id="sidebar"
                  data-sidebar-toggle-target="sidebar"
                     {{ stimulus_controller('viewport-sidebar') }}
-                 class="collapse collapse-horizontal show border-end">
+                 class="collapse collapse-horizontal border-end show">
                 <div id="sidebar-nav" aria-label="Menu" class="list-group border-0 rounded-0 text-sm-start">
                     <nav>
                         <ul class="list-group">
@@ -58,7 +58,7 @@
                                     <span>Bénéficiaires</span>
                                 </a>
                             <li>
-                                <a href="#"
+                                <a href="{{ path('app_personnels_index', {'personnel': personnel }) }}"
                                    class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar">
                                     <i class="bi bi-chevron-right me-1" aria-hidden="true"></i>
                                     <span>Signalétique</span>
