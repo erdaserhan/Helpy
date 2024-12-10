@@ -107,7 +107,7 @@ class Beneficiaire
         $anneenaissance = substr($date, 0, 4);
         $moisnaissance = substr($date, 5, 2);
         $journaissance = substr($date, 8, 2);
-        $duree = $annee - intval($anneenaissance);
+        $duree = $annee - (int)$anneenaissance;
         if ($mois < $moisnaissance) {
             $duree = $duree - 1;
         } elseif (($mois == $moisnaissance)) {
@@ -216,7 +216,7 @@ class Beneficiaire
 
         return $this;
     }
-
+    
     public function __toString()
     {
         return $this->getId();

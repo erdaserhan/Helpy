@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Signalétique{% endblock %}
+
+{% block body %}
+    {% block nav %}
+        {% include 'beneficiaires/_menu.html.twig' %}
+        <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-10 ps-md-2 pt-5 mb-5">
+            <div class="container ">
+                <div class="row">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 mb-5 personnelForm">
+                                {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                <button type="submit" class="btn btn-primary">{{ button_label|default('Chercher') }}</button>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {% for message in app.flashes('failure') %}
+                        <div class="alert alert-danger">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <h1>Agent</h1>
+                    <div class="table-responsive tableOverflow overflow-auto border border-2 p-4 rounded-4">
+                        <a href="{{ path('app_personnels_new') }}" class="btn btn-primary">Nouveau agent</a>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Fournisseur</th>
+                                <th>CompteBanque</th>
+                                <th>SoldeSmap</th>
+                                <th>actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for personnel in personnels %}
+                                <tr>
+                                    <td>{{ personnel.nom }}</td>
+                                    <td>{{ personnel.prenom }}</td>
+                                    <td>{{ personnel.fournisseur ? 'Oui' : 'Non' }}</td>
+                                    <td>{{ personnel.compteBanque }}</td>
+                                    <td>{{ personnel.soldeSmap }}</td>
+                                    <td>
+{#                                        <a href="{{ path('app_personnels_show', {'id': personnel.id}) }}">show</a>#}
+                                        <a href="{{ path('app_personnels_edit', {'id': personnel.id}) }}" class="btn btn-warning">Modifier</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="7">Pas d'agent</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        {% include 'beneficiaires/_footer.html.twig' %}
+    {% endblock %}
+{% endblock %}
+

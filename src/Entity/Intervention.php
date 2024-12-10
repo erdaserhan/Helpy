@@ -221,7 +221,5 @@ class Intervention
         $this->beneficiaire = $beneficiaire;
 
         return $this;
-    }   
-
-    
+    }
 }

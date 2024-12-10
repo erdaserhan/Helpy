@@ -1,0 +1,27 @@
+<button type="button"
+        class="btn btn-danger d-flex"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteModal">
+    Supprimer
+</button>
+
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Suppression d'agent</h5>
+                <button type="button" class="btn-close" aria-label="Annuler suppression" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Vous êtes sur de supprimer cet agent?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
+                <form id='deleteForm' method="post" action="{{ path('app_personnels_delete', {'id': personnel.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ personnel.id) }}">
+                    <button class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

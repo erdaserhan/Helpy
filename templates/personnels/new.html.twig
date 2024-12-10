@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Agent{% endblock %}
+
+{% block body %}
+    {% include 'beneficiaires/_menu.html.twig' %}
+    <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5 mb-5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 offset-lg-2">
+                    <h1>Nouveau Agent</h1>
+                    {{ include('personnels/_form.html.twig') }}
+                    <a href="{{ path('app_personnels_index', {'personnel': personnel.id|default }) }}" class="btn btn-warning mt-2">Annuler</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% include 'beneficiaires/_footer.html.twig' %}
+{% endblock %}
