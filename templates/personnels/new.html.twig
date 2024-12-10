@@ -10,7 +10,7 @@
                 <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 offset-lg-2">
                     <h1>Nouveau Agent</h1>
                     {{ include('personnels/_form.html.twig') }}
-                    <a href="{{ path('app_personnels_index', {'personnel': personnel.id|default }) }}" class="btn btn-warning mt-2">Annuler</a>
+                    <a href="{{ path('app_personnels_index') }}" class="btn btn-warning mt-2">Annuler</a>
                 </div>
             </div>
         </div>
