@@ -4,8 +4,22 @@
     width: 2.5rem;
 }
 
-#sidebar{
-    height: calc(100vh - 11vh);
+#sidebar {
+    height: calc(100vh - 5em);
+}
+
+#sidebar.show {
+    display: block;
+}
+
+@media screen and (min-width: 992px) {
+    #sidebar {
+        display:block;
+    }
+
+    #sidebar.show {
+        display: none;
+    }
 }
 
 @media (prefers-reduced-motion) {
@@ -14,9 +28,14 @@
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (min-width: 250px) and (max-width: 500px) {
     .buttons {
         display: none;
+    }
+
+    .personnelForm>form {
+        flex-direction: column;
+        width: 100%;
     }
 }
 
@@ -35,7 +54,6 @@ option, .item {
 }
 
 .clear-button {
-    background: red !important;
     font-size: x-large;
     top: 40% !important;
 }
@@ -44,8 +62,12 @@ option, .item {
     padding: unset !important;
 }
 
-/* @media only screen and (max-width: 820px) {
-    .collapse:not(.show) {
-        display: none !important;
-    }
-} */
+option, .item {
+    background-color: #feffff;
+}
+
+.personnelForm>form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}

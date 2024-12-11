@@ -16,7 +16,7 @@ class SelectPersonnelType extends AbstractType
         $builder
             ->add('personnel', EntityType::class, [
                 'class' => Personnel::class,
-                'placeholder' => "Chercher un personnel",
+                'placeholder' => "Chercher un membre du personnel",
                 'autocomplete' => true,
                 'required' => false,
                 'choice_label' => function (Personnel $personnel) {
@@ -27,7 +27,10 @@ class SelectPersonnelType extends AbstractType
                         ->orderBy('p.nom', 'ASC');
                 },
                 'attr' => [
-                    'aria-label' => 'Chercher un personnel',
+                    'aria-label' => 'Chercher un membre du personnel',
+                ],
+                'row_attr' => [
+                    'class' => 'input-group',
                 ],
             ])
         ;

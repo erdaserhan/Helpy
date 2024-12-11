@@ -38,7 +38,7 @@ class BeneficiaireType extends AbstractType
                 'autocomplete' => true,
                 'placeholder' => "Choix d'une personne",
                 'attr' => [
-                    'aria-label' => 'Chercher un personnel',
+                    'aria-label' => 'Chercher un membre du personnel',
                 ],
             ])
         ;

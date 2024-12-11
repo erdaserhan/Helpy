@@ -1,24 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beneficiaire index{% endblock %}
+{% block title %}Bénéficiaires{% endblock %}
 
 {% block body %}
     {% block nav %}
         {% include 'beneficiaires/_menu.html.twig' %}
-            <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-10 ps-md-2 pt-5">
+            <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5">
                 <div class="container ">
                     <div class="row">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-8 col-sm-8 col-md-6 col-lg-12 col-xl-12 mb-5 personnelForm">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 mb-5 personnelForm">
                                     {{ form_start(form) }}
                                     {{ form_widget(form) }}
-                                        <button type="submit" class="btn btn-primary mt-2 mt-sm-3 mt-md-3 mt-lg-3">{{ button_label|default('Chercher') }}</button>
+                                        <button type="submit" class="btn btn-primary">{{ button_label|default('Chercher') }}</button>
                                     {{ form_end(form) }}
                                 </div>
                             </div>
                         </div>
-{#                            {% component('PersonnelSearch') %}{% endcomponent %}#}
                         {% for message in app.flashes('success') %}
                             <div class="alert alert-success">
                                 {{ message }}
@@ -34,13 +33,13 @@
                             <a href="{{ path('app_beneficiaires_new', {'personnel': personnel }) }}" class="btn btn-primary">Nouveau bénéficiaire</a>
                             <table class="table table-hover mt-3">
                                 <thead>
-                                <tr>
-                                    <th>Bénéficiaire</th>
-                                    <th>Lien de parenté</th>
-                                    <th>Date de naissance</th>
-                                    <th>Date Lunette</th>
-                                    <th>Modifier</th>
-                                </tr>
+                                    <tr>
+                                        <th>Bénéficiaire</th>
+                                        <th>Lien de parenté</th>
+                                        <th>Date de naissance</th>
+                                        <th>Date lunette</th>
+                                        <th>Modifier / Supprimer</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 {% for beneficiaire in beneficiaires %}
@@ -50,7 +49,10 @@
                                         <td>{{ beneficiaire.dateNaissance ? beneficiaire.dateNaissance|date('d/m/Y') : '' }} ({{ beneficiaire.age }} ans)</td>
                                         <td>{{ beneficiaire.dateLunette ? beneficiaire.dateLunette|date('d/m/Y') : '' }}</td>
                                         <td>
-                                            <a href="{{ path('app_beneficiaires_edit', {'id': beneficiaire.id }) }}" class="btn btn-warning">Modifier</a>
+                                            <div class="d-flex align-items-center">
+                                                <a href="{{ path('app_beneficiaires_edit', {'id': beneficiaire.id }) }}" class="btn btn-warning">Modifier</a>
+                                                <a href="{{ path('app_beneficiaires_delete', {'id': beneficiaire.id }) }}" class="btn btn-danger ms-2">Supprimer</a>
+                                            </div>
                                         </td>
                                     </tr>
                                 {% else %}

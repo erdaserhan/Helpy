@@ -60,7 +60,7 @@ final class BeneficiairesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($beneficiaire);
             $entityManager->flush();
-            $this->addFlash('success', 'Le bénéficiaire a été crée.');
+            $this->addFlash('success', 'Le bénéficiaire a été créé.');
 
             return $this->redirectToRoute('app_beneficiaires_index', [
                 'personnel' => $beneficiaire->getPersonnel()?->getId(),
@@ -79,6 +79,7 @@ final class BeneficiairesController extends AbstractController
     {
         return $this->render('beneficiaires/show.html.twig', [
             'beneficiaire' => $beneficiaire,
+            'personnel' => $beneficiaire->getPersonnel(),
         ]);
     }
 

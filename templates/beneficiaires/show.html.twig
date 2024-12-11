@@ -1,38 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beneficiaire{% endblock %}
+{% block title %}Supprimer Bénéficiaire{% endblock %}
 
 {% block body %}
-    <h1>Beneficiaire</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ beneficiaire.id }}</td>
-            </tr>
-            <tr>
-                <th>NomPrenom</th>
-                <td>{{ beneficiaire.nomPrenom }}</td>
-            </tr>
-            <tr>
-                <th>DateNaissance</th>
-                <td>{{ beneficiaire.dateNaissance ? beneficiaire.dateNaissance|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Lien</th>
-                <td>{{ beneficiaire.lien }}</td>
-            </tr>
-            <tr>
-                <th>DateLunette</th>
-                <td>{{ beneficiaire.dateLunette ? beneficiaire.dateLunette|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_beneficiaires_index') }}">back to list</a>
-
-    <a href="{{ path('app_beneficiaires_edit', {'id': beneficiaire.id}) }}">edit</a>
-
-    {{ include('beneficiaires/_delete_form.html.twig') }}
+    {% include 'beneficiaires/_menu.html.twig' %}
+    <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 offset-lg-2">
+                    <h1>Bénéficiaire</h1>
+                    <div class="tableOverflow overflow-auto border border-2 p-4 rounded-4">
+                        <table class="table table-hover table-responsive">
+                            <tbody>
+                            <tr>
+                                <th>Nom Prénom</th>
+                                <td>{{ beneficiaire.nomPrenom }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date Naissance</th>
+                                <td>{{ beneficiaire.dateNaissance ? beneficiaire.dateNaissance|date('d-m-Y') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Lien</th>
+                                <td>{{ beneficiaire.lien }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date Lunette</th>
+                                <td>{{ beneficiaire.dateLunette ? beneficiaire.dateLunette|date('d-m-Y') : '' }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        {{ include('beneficiaires/_delete_form.html.twig') }}
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ path('app_beneficiaires_index', {'personnel': personnel.id|default }) }}" class="btn btn-warning">Annuler</a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% include 'beneficiaires/_footer.html.twig' %}
 {% endblock %}
