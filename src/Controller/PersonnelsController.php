@@ -21,8 +21,7 @@ final class PersonnelsController extends AbstractController
     public function index(
         PersonnelRepository $personnelRepository,
         Request $request
-    ): Response
-    {
+    ): Response {
         $personnel = $request->query->get('personnel');
 
         $form = $this->createForm(SelectPersonnelType::class, options: [
@@ -32,11 +31,13 @@ final class PersonnelsController extends AbstractController
         $form->handleRequest($request);
 
         $personnels = $personnelRepository->findBy(['id' => $personnel], ['nom' => 'ASC']);
+        $toutPersonnel = $personnelRepository->findAll();
 
         return $this->render('personnels/index.html.twig', [
             'personnels' => $personnels,
             'personnel' => $personnel,
             'form' => $form->createView(),
+            'toutPersonnel' => $toutPersonnel,
         ]);
     }
 

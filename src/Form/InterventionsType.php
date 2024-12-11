@@ -19,30 +19,6 @@ class InterventionsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('type', EntityType::class, [
-                'class' => InterventionType::class,
-                'choice_label' => 'name',
-            ])
-            ->add('beneficiaire', EntityType::class, [
-                'class' => Beneficiaire::class,
-                'choice_label' => 'nomPrenom',
-                'query_builder' => function (BeneficiaireRepository $br) {
-                    return $br->createQueryBuilder('b')
-                        ->orderBy('b.nomPrenom', 'ASC');
-                },
-            ])
-            ->add('dateRealise', DateType::class, [
-                'widget' => 'single_text',
-            ])
-            ->add('montantPaye')
-            ->add('dateFacture', DateType::class, [
-                'widget' => 'single_text',
-                'input' => 'datetime',
-            ])
-            ->add('montantRealise')
-            ->add('divers')
-            ->add('pieceNo')
-            ->add('extraitNo')
             ->add('personnel', EntityType::class, [
                 'class' => Personnel::class,
                 'choice_label' => function (Personnel $personnel) {
@@ -58,6 +34,30 @@ class InterventionsType extends AbstractType
                     'aria-label' => 'Chercher un personnel',
                 ],
             ])
+            ->add('beneficiaire', EntityType::class, [
+                'class' => Beneficiaire::class,
+                'choice_label' => 'nomPrenom',
+                'query_builder' => function (BeneficiaireRepository $br) {
+                    return $br->createQueryBuilder('b')
+                        ->orderBy('b.nomPrenom', 'ASC');
+                },
+            ])
+            ->add('type', EntityType::class, [
+                'class' => InterventionType::class,
+                'choice_label' => 'name',
+            ])
+            ->add('dateRealise', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('montantPaye')
+            ->add('dateFacture', DateType::class, [
+                'widget' => 'single_text',
+                'input' => 'datetime',
+            ])
+            ->add('montantRealise')
+            ->add('divers')
+            ->add('pieceNo')
+            ->add('extraitNo')
         ;
     }
 

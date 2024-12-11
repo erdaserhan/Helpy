@@ -43,6 +43,7 @@
                             </tr>
                             </thead>
                             <tbody>
+                            {% if personnels %}
                             {% for personnel in personnels %}
                                 <tr>
                                     <td>{{ personnel.nom }}</td>
@@ -54,11 +55,21 @@
                                         <a href="{{ path('app_personnels_edit', {'id': personnel.id}) }}" class="btn btn-warning">Modifier</a>
                                     </td>
                                 </tr>
+                            {% endfor %}
                             {% else %}
+                            {% for personnel in toutPersonnel|sort((a, b) => a.nom <=> b.nom) %}
                                 <tr>
-                                    <td colspan="7">Pas d'agent</td>
+                                    <td>{{ personnel.nom }}</td>
+                                    <td>{{ personnel.prenom }}</td>
+                                    <td>{{ personnel.fournisseur ? 'Oui' : 'Non' }}</td>
+                                    <td>{{ personnel.compteBanque }}</td>
+                                    <td>{{ personnel.soldeSmap }}</td>
+                                    <td>
+                                        <a href="{{ path('app_personnels_edit', {'id': personnel.id}) }}" class="btn btn-warning">Modifier</a>
+                                    </td>
                                 </tr>
                             {% endfor %}
+                            {% endif %}
                             </tbody>
                         </table>
                     </div>
