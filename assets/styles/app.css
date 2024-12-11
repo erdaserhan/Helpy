@@ -20,6 +20,10 @@
     #sidebar.show {
         display: none;
     }
+
+    .personnelForm>form>div>div {
+        width: 20em;
+    }
 }
 
 @media (prefers-reduced-motion) {
@@ -49,8 +53,8 @@ option, .item {
     gap: 1rem;
 }
 
-.personnelForm>form>div {
-    width: 20em;
+.personnelForm>form>div>div {
+    width: 22em;
 }
 
 .clear-button {
@@ -64,10 +68,4 @@ option, .item {
 
 option, .item {
     background-color: #feffff;
-}
-
-.personnelForm>form {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
 }
