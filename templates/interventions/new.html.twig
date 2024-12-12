@@ -10,7 +10,10 @@
                 <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 offset-lg-2">
                     <h1>Nouvelle Intervention</h1>
                     {{ include('interventions/_form.html.twig') }}
-                    <a href="{{ path('app_interventions_index', {'personnel': personnel.id|default }) }}" class="btn btn-warning mt-2">Annuler</a>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ path('app_interventions_index', {'personnel': personnel.id|default }) }}"><button class="btn btn-warning">Annuler</button></a>
+                        <button class="btn btn-success" form="intervention">{{ button_label|default('Sauvegarder') }}</button>
+                    </div>
                 </div>
             </div>
         </div>

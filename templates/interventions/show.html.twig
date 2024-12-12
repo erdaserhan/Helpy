@@ -1,50 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Intervention{% endblock %}
+{% block title %}Supprimer Bénéficiaire{% endblock %}
 
 {% block body %}
-    <h1>Intervention</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ intervention.id }}</td>
-            </tr>
-            <tr>
-                <th>MontantPaye</th>
-                <td>{{ intervention.montantPaye }}</td>
-            </tr>
-            <tr>
-                <th>DateFacture</th>
-                <td>{{ intervention.dateFacture ? intervention.dateFacture|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>MontantRealise</th>
-                <td>{{ intervention.montantRealise ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>DateRealise</th>
-                <td>{{ intervention.dateRealise ? intervention.dateRealise|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Divers</th>
-                <td>{{ intervention.divers }}</td>
-            </tr>
-            <tr>
-                <th>PieceNo</th>
-                <td>{{ intervention.pieceNo }}</td>
-            </tr>
-            <tr>
-                <th>ExtraitNo</th>
-                <td>{{ intervention.extraitNo }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_interventions_index') }}">back to list</a>
-
-    <a href="{{ path('app_interventions_edit', {'id': intervention.id}) }}">edit</a>
-
-    {{ include('interventions/_delete_form.html.twig') }}
+    {% include 'beneficiaires/_menu.html.twig' %}
+    <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 offset-lg-2">
+                    <h1>Intervention</h1>
+                    <div class="tableOverflow overflow-auto border border-2 p-4 rounded-4">
+                        <table class="table table-hover table-responsive">
+                            <tbody>
+                                <tr>
+                                    <th>Intervention</th>
+                                    <td>{{ intervention.type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Bénéficiaire</th>
+                                    <td>{{ intervention.beneficiaire.nomPrenom }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Montant payé</th>
+                                    <td>{{ intervention.montantPaye }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date référence</th>
+                                    <td>{{ intervention.dateFacture ? intervention.dateFacture|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Réalisé</th>
+                                    <td>{{ intervention.montantRealise ? 'Yes' : 'No' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date realisé</th>
+                                    <td>{{ intervention.dateRealise ? intervention.dateRealise|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Diver</th>
+                                    <td>{{ intervention.divers }}</td>
+                                </tr>
+                                <tr>
+                                    <th>No pièce</th>
+                                    <td>{{ intervention.pieceNo }}</td>
+                                </tr>
+                                <tr>
+                                    <th>No extrait</th>
+                                    <td>{{ intervention.extraitNo }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {{ include('interventions/_delete_form.html.twig') }}
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ path('app_interventions_index', {'personnel': personnel.id|default }) }}" class="btn btn-warning">Annuler</a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% include 'beneficiaires/_footer.html.twig' %}
 {% endblock %}
+

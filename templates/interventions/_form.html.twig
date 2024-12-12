@@ -1,4 +1,3 @@
-{{ form_start(form) }}
+{{ form_start(form, {attr: {novalidate: 'novalidate', 'id': 'intervention'}}) }}
     {{ form_widget(form) }}
-<button class="btn btn-primary mb-2">{{ button_label|default('Sauvegarder') }}</button>
 {{ form_end(form) }}

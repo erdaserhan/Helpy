@@ -32,19 +32,25 @@
                     <div class="table-responsive tableOverflow overflow-auto border border-2 p-4 rounded-4">
                         <a href="{{ path('app_interventions_new', {'personnel': personnel }) }}" class="btn btn-primary">Nouvelle intervention</a>
                         <table class="table table-hover mt-3">
+{#                               data-toggle="table"#}
+{#                               data-search="true"#}
+{#                               data-show-columns="true"#}
+{#                               data-show-columns-toggle-all="true"#}
+{#                               data-page-list="[1, 3, 5, 100, all]"#}
+{#                               data-pagination="true">#}
                             <thead>
-                                <tr>
-                                    <th>Intervention</th>
-                                    <th>Bénéficiaire</th>
-                                    <th>Date réalisé</th>
-                                    <th>Montant payé</th>
-                                    <th>Date référence</th>
-                                    <th>Réalisé</th>
-                                    <th>Divers</th>
-                                    <th>PieceNo</th>
-                                    <th>ExtraitNo</th>
-                                    <th>Actions</th>
-                                </tr>
+                            <tr>
+                                <th>Intervention</th>
+                                <th>Bénéficiaire</th>
+                                <th>Date réalisé</th>
+                                <th>Montant payé</th>
+                                <th>Date référence</th>
+                                <th>Réalisé</th>
+                                <th>Divers</th>
+                                <th>No pièce</th>
+                                <th>No extrait</th>
+                                <th>Modifier / Supprimer</th>
+                            </tr>
                             </thead>
                             <tbody>
                             {% for intervention in interventions %}
@@ -59,7 +65,10 @@
                                     <td>{{ intervention.pieceNo }}</td>
                                     <td>{{ intervention.extraitNo }}</td>
                                     <td>
-                                        <a href="{{ path('app_interventions_edit', {'id': intervention.id}) }}" class="btn btn-warning">Modifier</a>
+                                        <div class="d-flex align-items-center">
+                                            <a href="{{ path('app_interventions_edit', {'id': intervention.id}) }}" class="btn btn-warning">Modifier</a>
+                                            <a href="{{ path('app_interventions_delete', {'id': intervention.id }) }}" class="btn btn-danger ms-2">Supprimer</a>
+                                        </div>
                                     </td>
                                 </tr>
                             {% else %}
