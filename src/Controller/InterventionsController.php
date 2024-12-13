@@ -6,10 +6,12 @@ namespace App\Controller;
 
 use App\Entity\Intervention;
 use App\Form\InterventionsType;
-use App\Form\SelectInterventionsType;
+use App\Form\InterventionFilterType;
 use App\Repository\InterventionRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,29 +23,33 @@ final class InterventionsController extends AbstractController
     #[Route(name: 'app_interventions_index', methods: ['GET'])]
     public function index(
         InterventionRepository $interventionRepository,
-        Request $request
+        Request $request,
     ): Response {
         $queryParams = $request->query->all();
         $queryParams = array_intersect_key(
             $queryParams,
             array_flip(['personnel', 'type', 'montantRealise'])
         );
+        $queryParams = array_filter($queryParams, static fn (mixed $paramValue): bool => ($paramValue ?? '') !== '');
 
-        $form = $this->createForm(SelectInterventionsType::class, options: [
+        $form = $this->createForm(InterventionFilterType::class, options: [
             'method' => 'GET',
         ]);
 
         $form->handleRequest($request);
 
-        $interventions = $interventionRepository->findBy(
-            array_filter($queryParams, static fn (mixed $paramValue): bool => ($paramValue ?? '') !== ''),
-            ['dateRealise' => 'DESC']
+        $queryBuilder =  $interventionRepository->getQueryBuilderFromSearch($queryParams);
+        $adapter = new QueryAdapter($queryBuilder);
+        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            $adapter,
+            (int)$request->query->get('page', 1),
+            2
         );
 
         return $this->render('interventions/index.html.twig', [
-            'interventions' => $interventions,
             'personnel' => $request->query->get('personnel'),
             'form' => $form->createView(),
+            'pager' => $pagerfanta,
         ]);
     }
 

@@ -6,10 +6,11 @@ use App\Entity\InterventionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SelectInterventionsType extends AbstractType
+class InterventionFilterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -48,8 +49,7 @@ class SelectInterventionsType extends AbstractType
     {
         $resolver->setDefaults([
             'csrf_protection' => false,
-            'csrf_field_name' => 'test',
-            'csrf_token_id'   => 'post_item',
+            'allow_extra_fields' => true
         ]);
     }
 }

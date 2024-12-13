@@ -47,7 +47,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for intervention in interventions %}
+                            {% for intervention in pager %}
                                 <tr>
                                     <td>{{ intervention.type }}</td>
                                     <td>{{ intervention.beneficiaire.nomPrenom }}</td>
@@ -76,6 +76,7 @@
                             {% endfor %}
                             </tbody>
                         </table>
+                        {{ pagerfanta(pager) }}
                     </div>
                 </div>
             </div>

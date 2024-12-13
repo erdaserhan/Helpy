@@ -5,24 +5,20 @@
 }
 
 #sidebar {
-    height: calc(100vh - 5em);
+    height: calc(100vh - 3.5em);
 }
 
 #sidebar.show {
     display: block;
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1426px) {
     #sidebar {
         display:block;
     }
 
     #sidebar.show {
         display: none;
-    }
-
-    .personnelForm>form>div>div {
-        width: 20em;
     }
 }
 
@@ -32,7 +28,7 @@
     }
 }
 
-@media only screen and (min-width: 250px) and (max-width: 500px) {
+@media only screen and (min-width: 250px) and (max-width: 767px) {
     .buttons {
         display: none;
     }
@@ -43,17 +39,32 @@
     }
 }
 
+@media only screen and (min-width: 250px) and (max-width: 992px) {
+
+    .interventionForm>form {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 250px) and (max-width: 1425px) {
+
+    .sidebarPosition {
+        position: absolute;
+    }
+}
+
 option, .item {
     background-color: #feffff;
 }
 
-.personnelForm>form {
+.personnelForm>form, .interventionForm>form {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-.personnelForm>form>div>div {
+.personnelForm>form>div {
     width: 22em;
 }
 
@@ -68,4 +79,8 @@ option, .item {
 
 option, .item {
     background-color: #feffff;
+}
+
+.interventionForm>form>div {
+    display: contents;
 }
