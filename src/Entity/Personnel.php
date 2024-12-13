@@ -19,7 +19,7 @@ class Personnel
     #[ORM\Column(name: 'LPersonnelNo', type: 'integer')]
     private int $id;
 
-    #[ORM\Column(   
+    #[ORM\Column(
         name: 'LPersonnelNom',
         type: 'string',
         length: 50,

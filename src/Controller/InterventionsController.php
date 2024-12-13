@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Intervention;
 use App\Form\InterventionsType;
-use App\Form\SelectPersonnelType;
+use App\Form\SelectInterventionsType;
 use App\Repository\InterventionRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,21 +23,27 @@ final class InterventionsController extends AbstractController
         InterventionRepository $interventionRepository,
         Request $request
     ): Response {
+        $queryParams = $request->query->all();
+        $queryParams = array_intersect_key(
+            $queryParams,
+            array_flip(['personnel', 'type', 'montantRealise'])
+        );
 
-        $personnel = $request->query->get('personnel');
-
-        $form = $this->createForm(SelectPersonnelType::class, options: [
+        $form = $this->createForm(SelectInterventionsType::class, options: [
             'method' => 'GET',
         ]);
 
         $form->handleRequest($request);
 
-        $interventions = $interventionRepository->findBy(['personnel' => $personnel], ['id' => 'ASC']);
+        $interventions = $interventionRepository->findBy(
+            array_filter($queryParams, static fn (mixed $paramValue): bool => ($paramValue ?? '') !== ''),
+            ['dateRealise' => 'DESC']
+        );
 
         return $this->render('interventions/index.html.twig', [
             'interventions' => $interventions,
-            'personnel' => $personnel,
-            'form' => $form
+            'personnel' => $request->query->get('personnel'),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -60,9 +66,11 @@ final class InterventionsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($intervention);
             $entityManager->flush();
-            $this->addFlash('success', "L'intervention a été crée.");
+            $this->addFlash('success', "L'intervention a été créée.");
 
-            return $this->redirectToRoute('app_interventions_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_interventions_index', [
+                'personnel' => $intervention->getPersonnel()?->getId(),
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('interventions/new.html.twig', [
@@ -77,6 +85,7 @@ final class InterventionsController extends AbstractController
     {
         return $this->render('interventions/show.html.twig', [
             'intervention' => $intervention,
+            'personnel' => $intervention->getPersonnel(),
         ]);
     }
 
@@ -86,6 +95,7 @@ final class InterventionsController extends AbstractController
         Intervention $intervention,
         EntityManagerInterface $entityManager
     ): Response {
+
         $form = $this->createForm(InterventionsType::class, $intervention);
         $form->handleRequest($request);
 
@@ -111,14 +121,17 @@ final class InterventionsController extends AbstractController
         Intervention $intervention,
         EntityManagerInterface $entityManager
     ): Response {
+
         if ($this->isCsrfTokenValid('delete' . $intervention->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($intervention);
             $entityManager->flush();
             $this->addFlash('success', 'L\'intervention a été supprimée.');
-        }else {
+        } else {
             $this->addFlash('failure', "L\intervention n'a pas été supprimée.");
         }
 
-        return $this->redirectToRoute('app_interventions_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_interventions_index', [
+            'personnel' => $intervention->getPersonnel()?->getId(),
+        ], Response::HTTP_SEE_OTHER);
     }
 }

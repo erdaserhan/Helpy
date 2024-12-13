@@ -66,6 +66,7 @@ class InterventionType
     public function removeIntervention(Intervention $intervention): static
     {
         if ($this->interventions->removeElement($intervention)) {
+            // set the owning side to null (unless already changed)
             if ($intervention->getType() === $this) {
                 $intervention->setType(null);
             }

@@ -2,36 +2,39 @@
 
 namespace App\Form;
 
-use App\Entity\Personnel;
-use App\Repository\PersonnelRepository;
+use App\Entity\InterventionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SelectPersonnelType extends AbstractType
+class SelectInterventionsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('personnel', EntityType::class, [
-                'class' => Personnel::class,
-                'placeholder' => "Chercher un membre du personnel",
-                'autocomplete' => true,
+            ->add('personnel', PersonnelType::class)
+            ->add('type', EntityType::class, [
+                'class' => InterventionType::class,
+                'choice_label' => 'name',
                 'required' => false,
-                'choice_label' => function (Personnel $personnel) {
-                    return $personnel->getNom() . ' ' . $personnel->getPrenom();
-                },
-                'query_builder' => function (PersonnelRepository $pr) {
-                    return $pr->createQueryBuilder('p')
-                        ->orderBy('p.nom', 'ASC');
-                },
-                'attr' => [
-                    'aria-label' => 'Chercher un membre du personnel',
-                ],
+                'placeholder' => "Tous",
                 'row_attr' => [
                     'class' => 'input-group',
                 ],
+            ])
+            ->add('montantRealise', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false,
+                ],
+                'placeholder' => "Tous",
+                'label' => 'Payement réalisé',
+                'row_attr' => [
+                    'class' => 'input-group',
+                ],
+                'required' => false
             ])
         ;
     }

@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Beneficiaire;
 use App\Form\BeneficiaireType;
-use App\Form\SelectPersonnelType;
+use App\Form\PersonnelType;
 use App\Repository\BeneficiaireRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +26,7 @@ final class BeneficiairesController extends AbstractController
 
         $personnel = $request->query->get('personnel');
 
-        $form = $this->createForm(SelectPersonnelType::class, options: [
+        $form = $this->createForm(PersonnelType::class, options: [
             'method' => 'GET',
         ]);
 
