@@ -16,13 +16,16 @@ class PersonnelRepository extends ServiceEntityRepository
         parent::__construct($registry, Personnel::class);
     }
 
-    public function searchByName(string $search): array    
-    {        
-        return $this->createQueryBuilder('p')
+    /** @return array<int, Personnel> */
+    public function searchByName(string $search): array
+    {
+        $results = $this->createQueryBuilder('p')
             ->where('p.nom LIKE :search')
             ->orWhere('p.prenom LIKE :search')
             ->setParameter('search', '%' . $search . '%')
             ->getQuery()
-            ->getResult();
+            ->getResult(Query::HYDRATE_OBJECT);
+
+        return $results instanceof \Traversable ? iterator_to_array($results) : (array) $results;
     }
 }

@@ -5,12 +5,12 @@
 {% block body %}
     {% block nav %}
         {% include 'beneficiaires/_menu.html.twig' %}
-        <main id="main" class="col-12 col-sm-12 col-md-12 col-lg-9 ps-md-2 pt-5 mb-5">
-            <div class="container ">
+        <main id="main" class="col ps-md-2 pt-4 mb-5">
+            <div class="container-fluid p-5">
                 <div class="row">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 mb-5 personnelForm">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-5 personnelForm">
                                 {{ form_start(form) }}
                                 {{ form_widget(form) }}
                                 <button type="submit" class="btn btn-primary">{{ button_label|default('Chercher') }}</button>
@@ -31,7 +31,7 @@
                     <h1>Agent</h1>
                     <div class="table-responsive tableOverflow overflow-auto border border-2 p-4 rounded-4">
                         <a href="{{ path('app_personnels_new') }}" class="btn btn-primary">Nouvel agent</a>
-                        <table class="table">
+                        <table class="table table-hover mt-3">
                             <thead>
                             <tr>
                                 <th>Nom</th>
@@ -44,34 +44,49 @@
                             </thead>
                             <tbody>
                             {% if personnels %}
-                            {% for personnel in personnels %}
-                                <tr>
-                                    <td>{{ personnel.nom }}</td>
-                                    <td>{{ personnel.prenom }}</td>
-                                    <td>{{ personnel.fournisseur ? 'Oui' : 'Non' }}</td>
-                                    <td>{{ personnel.compteBanque }}</td>
-                                    <td>{{ personnel.soldeSmap }}</td>
-                                    <td>
-                                        <a href="{{ path('app_personnels_edit', {'id': personnel.id}) }}" class="btn btn-warning">Modifier</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                {% for personnel in personnels %}
+                                    <tr>
+                                        <td>{{ personnel.nom }}</td>
+                                        <td>{{ personnel.prenom }}</td>
+                                        <td>
+                                            <span class="badge {{ personnel.fournisseur ? 'bg-success' : 'bg-danger' }}">
+                                                {{ personnel.fournisseur ? 'Oui' : 'Non' }}
+                                            </span>
+                                        </td>
+                                        <td>{{ personnel.compteBanque }}</td>
+                                        <td>{{ personnel.soldeSmap }}</td>
+                                        <td>
+                                            <a href="{{ path('app_personnels_edit', {'id': personnel.id}) }}" class="btn btn-warning">Modifier</a>
+                                            <a href="{{ path('app_personnels_delete', {'id': personnel.id }) }}" class="btn btn-danger ms-2">Supprimer</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                             {% else %}
-                            {% for personnel in toutPersonnel|sort((a, b) => a.nom <=> b.nom) %}
-                                <tr>
-                                    <td>{{ personnel.nom }}</td>
-                                    <td>{{ personnel.prenom }}</td>
-                                    <td>{{ personnel.fournisseur ? 'Oui' : 'Non' }}</td>
-                                    <td>{{ personnel.compteBanque }}</td>
-                                    <td>{{ personnel.soldeSmap }}</td>
-                                    <td>
-                                        <a href="{{ path('app_personnels_edit', {'id': personnel.id}) }}" class="btn btn-warning">Modifier</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                {% for personnel in pager %}
+                                    <tr>
+                                        <td>{{ personnel.nom }}</td>
+                                        <td>{{ personnel.prenom }}</td>
+                                        <td>
+                                            <span class="badge {{ personnel.fournisseur ? 'bg-success' : 'bg-danger' }}">
+                                                {{ personnel.fournisseur ? 'Oui' : 'Non' }}
+                                            </span>
+                                        </td>
+                                        <td>{{ personnel.compteBanque }}</td>
+                                        <td>{{ personnel.soldeSmap|format_currency('EUR', {rounding_mode: 'floor'}) }}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <a href="{{ path('app_personnels_edit', {'id': personnel.id }) }}" class="btn btn-warning">Modifier</a>
+                                                <a href="{{ path('app_personnels_delete', {'id': personnel.id }) }}" class="btn btn-danger ms-2">Supprimer</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                             {% endif %}
                             </tbody>
                         </table>
+                        {% if not personnels %}
+                            {{ pagerfanta(pager) }}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -79,4 +94,3 @@
         {% include 'beneficiaires/_footer.html.twig' %}
     {% endblock %}
 {% endblock %}
-

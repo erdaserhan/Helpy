@@ -43,7 +43,7 @@ final class InterventionsController extends AbstractController
         $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
             $adapter,
             (int)$request->query->get('page', 1),
-            2
+            5
         );
 
         return $this->render('interventions/index.html.twig', [

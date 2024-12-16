@@ -29,9 +29,9 @@ class InterventionsType extends AbstractType
                         ->orderBy('p.nom', 'ASC');
                 },
                 'autocomplete' => true,
-                'placeholder' => "Choix d'une personne",
+                'placeholder' => "Chercher un membre du personnel",
                 'attr' => [
-                    'aria-label' => 'Chercher un personnel',
+                    'aria-label' => 'Chercher un membre du personnel',
                 ],
             ])
             ->add('beneficiaire', EntityType::class, [

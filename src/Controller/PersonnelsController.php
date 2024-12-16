@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Personnel;
+use App\Form\PersonnelsType;
 use App\Form\PersonnelType;
-use App\Form\SelectPersonnelType;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,20 +27,28 @@ final class PersonnelsController extends AbstractController
     ): Response {
         $personnel = $request->query->get('personnel');
 
-        $form = $this->createForm(SelectPersonnelType::class, options: [
+        $form = $this->createForm(PersonnelType::class, options: [
             'method' => 'GET',
         ]);
 
         $form->handleRequest($request);
 
+
+        $getAllPersonnels =  $personnelRepository->findBy([], ['nom' => 'ASC']);
+        $adapter = new ArrayAdapter($getAllPersonnels);
+        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            $adapter,
+            (int)$request->query->get('page', 1),
+            5
+        );
+
         $personnels = $personnelRepository->findBy(['id' => $personnel], ['nom' => 'ASC']);
-        $toutPersonnel = $personnelRepository->findAll();
 
         return $this->render('personnels/index.html.twig', [
             'personnels' => $personnels,
-            'personnel' => $personnel,
+            'personnel' => $request->query->get('personnel'),
             'form' => $form->createView(),
-            'toutPersonnel' => $toutPersonnel,
+            'pager' => $pagerfanta,
         ]);
     }
 
@@ -48,20 +59,20 @@ final class PersonnelsController extends AbstractController
     ): Response {
 
         $personnel = new Personnel();
-        $form = $this->createForm(PersonnelType::class, $personnel);
+        $form = $this->createForm(PersonnelsType::class, $personnel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($personnel);
             $entityManager->flush();
-            $this->addFlash('success', "L'agent a été crée.");
+            $this->addFlash('success', "L'agent a été créé.");
 
             return $this->redirectToRoute('app_personnels_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('personnels/new.html.twig', [
-            'personnel' => $personnel,
-            'form' => $form,
+            'personnel' => $request->query->get('personnel'),
+            'form' => $form
         ]);
     }
 
@@ -80,12 +91,12 @@ final class PersonnelsController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
 
-        $form = $this->createForm(PersonnelType::class, $personnel);
+        $form = $this->createForm(PersonnelsType::class, $personnel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-            $this->addFlash('success', "L'agent a été modifiée.");
+            $this->addFlash('success', "L'agent a été modifié.");
 
             return $this->redirectToRoute('app_personnels_index', [
                 'personnel' => $personnel->getId(),
@@ -93,7 +104,7 @@ final class PersonnelsController extends AbstractController
         }
 
         return $this->render('personnels/edit.html.twig', [
-            'personnel' => $personnel,
+            'personnel' => $personnel->getId(),
             'form' => $form,
         ]);
     }
@@ -104,9 +115,9 @@ final class PersonnelsController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $personnel->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($personnel);
             $entityManager->flush();
-            $this->addFlash('success', 'L\'agent a été supprimée.');
+            $this->addFlash('success', 'L\'agent a été supprimé.');
         } else {
-            $this->addFlash('failure', "L\agent n'a pas été supprimée.");
+            $this->addFlash('failure', "L\agent n'a pas été supprimé.");
         }
 
         return $this->redirectToRoute('app_personnels_index', [], Response::HTTP_SEE_OTHER);

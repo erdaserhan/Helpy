@@ -14,7 +14,7 @@
                             <tbody>
                                 <tr>
                                     <th>Intervention</th>
-                                    <td>{{ intervention.type }}</td>
+                                    <td>{{ intervention.type.name }}</td>
                                 </tr>
                                 <tr>
                                     <th>Bénéficiaire</th>
@@ -30,14 +30,14 @@
                                 </tr>
                                 <tr>
                                     <th>Réalisé</th>
-                                    <td>{{ intervention.montantRealise ? 'Yes' : 'No' }}</td>
+                                    <td>{{ intervention.montantRealise ? 'Oui' : 'Non' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Date realisé</th>
                                     <td>{{ intervention.dateRealise ? intervention.dateRealise|date('Y-m-d') : '' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Diver</th>
+                                    <th>Divers</th>
                                     <td>{{ intervention.divers }}</td>
                                 </tr>
                                 <tr>
@@ -62,4 +62,3 @@
     </main>
     {% include 'beneficiaires/_footer.html.twig' %}
 {% endblock %}
-
