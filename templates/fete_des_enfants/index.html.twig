@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fête des enfants{% endblock %}
+
+{% block body %}
+    {% block nav %}
+        {% include 'beneficiaires/_menu.html.twig' %}
+        <main id="main" class="col ps-md-2 pt-4">
+            <div class="container-fluid p-5">
+                <div class="row">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h1>Fête des enfants {{annee}}</h1>
+                        </div>
+                    </div>
+                    <div class="table-responsive tableOverflow overflow-auto border border-2 p-4 rounded-4">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 mb-5 personnelForm">
+                            {{ form_start(form) }}
+                            {{ form_row(form) }}
+                            <button type="submit" class="btn btn-primary">{{ button_label|default('Chercher') }}</button>
+                            {{ form_end(form) }}
+                        </div>
+                        {% if enfants|length > 0 %}
+                            <table class="table table-hover mt-3">
+                                <thead>
+                                    <tr>
+                                        <th>Nom et prénom de l'enfant</th>
+                                        <th>Date de naissance de l'enfant</th>
+                                        <th>Age</th>
+                                        <th>Nom et prénom du parent</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for enfant in enfants|sort((a, b) => a.nomPrenom <=> b.nomPrenom) %}
+                                    <tr>
+                                        <td>{{enfant.nomPrenom}}</td>
+                                        <td>{% if enfant.dateNaissance %}{{enfant.dateNaissance|date('d/m/Y')}}{% endif %}</td>
+                                        <td>{% if enfant.age %}{{enfant.getAge(dateDeReference)}}{% endif %}</td>
+                                        <td>{{enfant.personnel.nom}} {{enfant.personnel.prenom}}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="6">Aucune résultat pour cette année</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </main>
+        {% include 'beneficiaires/_footer.html.twig' %}
+    {% endblock %}
+{% endblock %}

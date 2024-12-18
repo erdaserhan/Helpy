@@ -36,10 +36,10 @@
                     <nav class="py-1">
                         <ul class="list-group">
                             <li>
-                                <a href="{{ path('app_interventions_index', {'personnel': personnel }) }}" data-bs-parent="#sidebar"
+                                <a href="{{ path('app_interventions_index', {'personnel': personnel|default }) }}" data-bs-parent="#sidebar"
                                    class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate
                                     {% if app.request.attributes.get('_route') starts with 'app_interventions' %}active{% endif %}"
-                                    {% if app.request.attributes.get('_route') starts with 'app_interventions' %}aria-current="page"{% endif %}>
+                                   {% if app.request.attributes.get('_route') starts with 'app_interventions' %}aria-current="page"{% endif %}>
                                     <i class="bi bi-chevron-right me-1" aria-hidden="true"></i>
                                     <span>Interventions</span>
                                 </a>
@@ -54,7 +54,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ path('app_beneficiaires_index', {'personnel': personnel }) }}" class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate
+                                <a href="{{ path('app_beneficiaires_index', {'personnel': personnel|default  }) }}" class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate
                                    {% if app.request.attributes.get('_route') starts with 'app_beneficiaires' %}active{% endif %}"
                                    {% if app.request.attributes.get('_route') starts with 'app_beneficiaires' %}aria-current="page"{% endif %}
                                    data-bs-parent="#sidebar">
@@ -62,7 +62,7 @@
                                     <span>Bénéficiaires</span>
                                 </a>
                             <li>
-                                <a href="{{ path('app_personnels_index', {'personnel': personnel }) }}"
+                                <a href="{{ path('app_personnels_index', {'personnel': personnel|default  }) }}"
                                    class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate
                                    {% if app.request.attributes.get('_route') starts with 'app_personnels' %}active{% endif %}"
                                    {% if app.request.attributes.get('_route') starts with 'app_personnels' %}aria-current="page"{% endif %} data-bs-parent="#sidebar">
@@ -70,7 +70,7 @@
                                     <span>Signalétique</span>
                                 </a>
                             </li>
-                            <li><a href="#"
+                            <li><a href="{{ path('app_fetedesenfants_index') }}"
                                    class="list-group-item list-group-item-action border-end-0 d-inline-block text-truncate
                                    {% if app.request.attributes.get('_route') starts with 'app_fetedesenfants' %}active{% endif %}"
                                    {% if app.request.attributes.get('_route') starts with 'app_fetedesenfants' %}aria-current="page"{% endif %} data-bs-parent="#sidebar">
