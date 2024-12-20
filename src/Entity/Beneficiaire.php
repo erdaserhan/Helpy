@@ -71,6 +71,8 @@ class Beneficiaire
     #[ORM\OneToMany(targetEntity: Intervention::class, mappedBy: 'beneficiaire')]
     private Collection $interventions;
 
+//    private int $sumInterventionsLunettes = 0;
+
     public function __construct()
     {
         $this->interventions = new ArrayCollection();
@@ -114,6 +116,9 @@ class Beneficiaire
             if ($jour < $journaissance) {
                 $duree = $duree - 1;
             }
+        }
+        if ($duree < 0) {
+            $duree = 0;
         }
         $this->age = $duree;
         return $this->age;

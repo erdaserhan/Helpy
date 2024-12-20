@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'HelpyInterventions')]
 class Intervention
 {
+    public const MAX_REMBOURSEMENT_LUNETTES = 150;
+    public const MAX_REMBOURSEMENT_VACANCES_ENFANT = 125;
+    public const MAX_REMBOURSEMENT_VACANCES_ADO = 50;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'InterventionNo')]

@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bénéficiaires{% endblock %}
+
+{% block body %}
+    {% block nav %}
+        {% include 'common/_menu.html.twig' %}
+        <main id="main" class="col ps-md-2 pt-4">
+            <div class="container-fluid p-5">
+                <div class="row">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 mb-5 personnelForm">
+                                {{ form_start(form) }}
+                                {{ form_row(form) }}
+                                <button type="submit" class="btn btn-primary">{{ button_label|default('Chercher') }}</button>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                    <h1>Soldes lunettes</h1>
+                    <div class="table-responsive tableOverflow overflow-auto border border-2 p-4 rounded-4">
+                        <table class="table table-hover mt-3">
+                            <thead>
+                            <tr>
+                                <th>Bénéficiaire</th>
+                                <th>Lien de parenté</th>
+                                <th>Montant</th>
+                                <th>Jusqu'à</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for soldeLunettes in soldesLunettes %}
+                                <tr>
+                                    <td>{{ soldeLunettes.beneficiaire.nomPrenom }}</td>
+                                    <td>{{ soldeLunettes.beneficiaire.lien }}</td>
+                                    <td>
+                                        Solde :
+                                        {{ maxRemboursementLunettes|format_currency('EUR') }} -
+                                        {{ soldeLunettes.totalRemboursements|format_currency('EUR') }} =
+                                        {{ (maxRemboursementLunettes - soldeLunettes.totalRemboursements)|format_currency('EUR') }}
+                                    </td>
+                                    <td>{{ soldeLunettes.dateFinValidite|date(('d/m/Y')) }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                <h1>Soldes vacances</h1>
+                <div class="table-responsive tableOverflow overflow-auto border border-2 p-4 rounded-4">
+                    <table class="table table-hover mt-3">
+                        <thead>
+                        <tr>
+                            <th>Bénéficiaire</th>
+                            <th>Lien de parenté</th>
+                            <th>Age</th>
+                            <th>Montant</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for soldeVacances in soldesVacances %}
+                            <tr>
+                                <td>{{ soldeVacances.beneficiaire.nomPrenom }}</td>
+                                <td>{{ soldeVacances.beneficiaire.lien }}</td>
+                                {% if soldeVacances.beneficiaire.dateNaissance is not null %}
+                                    <td>{{ soldeVacances.beneficiaire.age(annee ~ '-01-01') }} ans</td>
+                                    <td>
+                                        Solde :
+                                        {{ soldeVacances.max|format_currency('EUR') }} -
+                                        {{ soldeVacances.totalRemboursements|format_currency('EUR') }} =
+                                        {{ (soldeVacances.max - soldeVacances.totalRemboursements)|format_currency('EUR') }}
+                                    </td>
+                                {% else %}
+                                    <td>Date de naissance inconnnue</td>
+                                    <td></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <h1>Interventions annuelles</h1>
+                <div class="table-responsive tableOverflow overflow-auto border border-2 p-4 rounded-4">
+                    <table class="table table-hover mt-3">
+                        <thead>
+                        <tr>
+{#                            <th>Année</th>#}
+{#                            <th>Bénéficiaire</th>#}
+{#                            <th>Type</th>#}
+{#                            <th>Montant Total</th>#}
+{#                            <th></th>#}
+                        </tr>
+                        </thead>
+                        <tbody>
+{#                        {% for annuel in years %}#}
+{#                            <tr>#}
+{#                                <td>{{ annuel.dateFacture|date('Y') }}</td>#}
+{#                                <td>{{ annuel.nomPrenom }}</td>#}
+{#                                <td>{{ annuel.name }}</td>#}
+{#                                <td>{{ annuel.total }}€</td>#}
+{#                            </tr>#}
+{#                        {% endfor %}#}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </main>
+        {% include 'common/_footer.html.twig' %}
+    {% endblock %}
+{% endblock %}

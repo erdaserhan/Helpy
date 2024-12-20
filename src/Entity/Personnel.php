@@ -50,7 +50,7 @@ class Personnel
     private string $compteBanque;
 
     #[ORM\Column(name: 'LPersonnelSoldeSMAP', nullable: true, options: ['default' => 0])]
-    private int $soldeSmap;
+    private ?int $soldeSmap = 0;
 
     /**
      * @var Collection<int, Beneficiaire>
@@ -130,12 +130,12 @@ class Personnel
         return $this;
     }
 
-    public function getSoldeSmap(): int
+    public function getSoldeSmap(): ?int
     {
         return $this->soldeSmap;
     }
 
-    public function setSoldeSmap(int $soldeSmap): Personnel
+    public function setSoldeSmap(?int $soldeSmap): Personnel
     {
         $this->soldeSmap = $soldeSmap;
 
@@ -143,7 +143,7 @@ class Personnel
     }
 
     /**
-     * @return Collection<int, Beneficiaire>
+     * @return Collection<int, Beneficiaire>| Beneficiaire[]
      */
     public function getBeneficiaires(): Collection
     {

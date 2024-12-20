@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Beneficiaire;
-use App\Form\FeteDesEnfantsDateType;
+use App\Form\YearChoiceType;
 use App\Repository\BeneficiaireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ final class FeteDesEnfantsController extends AbstractController
     {
         $annee = $request->query->get('annee');
 
-        $form = $this->createForm(FeteDesEnfantsDateType::class, options: [
+        $form = $this->createForm(YearChoiceType::class, options: [
             'method' => 'GET',
         ]);
 
