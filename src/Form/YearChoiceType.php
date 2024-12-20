@@ -12,7 +12,7 @@ class YearChoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => "Année",
-            'choices' => range(Date('Y'), 2000),
+            'choices' => range(date('Y'), 2000),
             'choice_label' => fn ($value): int => $value,
             'row_attr' => [
                 'class' => 'input-group',

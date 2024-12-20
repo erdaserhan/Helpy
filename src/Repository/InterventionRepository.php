@@ -42,7 +42,8 @@ class InterventionRepository extends ServiceEntityRepository
     {
         $threeYearsAgo = (new \DateTime())->sub(new \DateInterval('P3Y'))->setTime(0, 0);
 
-        return $this->createQueryBuilder('i')
+        /** @var array{'minDateFacture': string, 'totalRemboursements': float} $data */
+        $data = $this->createQueryBuilder('i')
             ->select(
                 'min(i.dateFacture) as minDateFacture',
                 'sum(i.montantPaye) AS totalRemboursements'
@@ -58,12 +59,15 @@ class InterventionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleResult()
             ;
+
+        return $data;
     }
 
 
-    public function getTotalRemboursementsVacancesByYear(int|Beneficiaire $beneficiaire, int $year = 2024): float
+    public function getTotalRemboursementsVacancesByYear(int|Beneficiaire $beneficiaire, int $year): float
     {
-        return $this->createQueryBuilder('i')
+        /** @var float $sum */
+        $sum = $this->createQueryBuilder('i')
             ->select(
                 'sum(i.montantPaye)'
             )
@@ -81,12 +85,16 @@ class InterventionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult() ?? 0
             ;
+
+        return $sum;
     }
 
 //    public function getInterventionsByYear(mixed $personnel): array
 //    {
 //        return $this->createQueryBuilder('i')
-//            ->select('interventionType.name', 'sum(i.montantPaye) AS total', 'i.dateFacture', 'beneficiaire.nomPrenom')
+//            ->select(
+//                'interventionType.name',
+//                'min(i.dateFacture) as annee',)
 //            ->join('i.type', 'interventionType')
 //            ->join('i.beneficiaire', 'beneficiaire')
 //            ->andWhere('i.personnel = :personnel')
@@ -97,20 +105,41 @@ class InterventionRepository extends ServiceEntityRepository
 //            ->getResult()
 //            ;
 //    }
+    /**
+     * @return array{'Annee': int, 'InterventionType': string, 'NomPrenom': string, 'Total': float}
+     */
+    public function getInterventionsByYear(int $personnelId): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
 
+        $sql = '
+            SELECT
+                YEAR(i.InterventionDateFacture) AS Annee,
+                i.InterventionType AS InterventionType,
+                b.BénéficiaireNomPrénom AS NomPrenom,
+                SUM(InterventionMontantPayé) AS Total
+            FROM
+                HelpyInterventions i
+            INNER JOIN HelpyBénéficiaires b ON
+                b.BénéficiaireNo = i.InterventionBénéficiaireNo
+            WHERE
+                b.BénéficiairePersonnelNo = :personnel
+            GROUP BY
+                Annee,
+                InterventionType,
+                NomPrenom
+            ORDER BY
+                Annee DESC,
+                InterventionType;
+            ';
 
-//    public function getInterventionsByYear(mixed $personnel): array
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.personnel = :personnel')
-//            ->setParameter('personnel', $personnel)
-//            ->getQuery()
-//            ->getResult()
-//            ;
-//    }
+        $resultSet = $conn->executeQuery($sql, ['personnel' => $personnelId]);
 
+        /** @var array{'Annee': int, 'InterventionType': string, 'NomPrenom': string, 'Total': float} $data */
+        $data = $resultSet->fetchAllAssociative();
 
-
+        return $data;
+    }
 
     //    /**
     //     * @return Intervention[] Returns an array of Intervention objects

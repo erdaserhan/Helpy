@@ -84,22 +84,22 @@
                     <table class="table table-hover mt-3">
                         <thead>
                         <tr>
-{#                            <th>Année</th>#}
-{#                            <th>Bénéficiaire</th>#}
-{#                            <th>Type</th>#}
-{#                            <th>Montant Total</th>#}
-{#                            <th></th>#}
+                            <th>Année</th>
+                            <th>Type</th>
+                            <th>Bénéficiaire</th>
+                            <th>Montant Total</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
-{#                        {% for annuel in years %}#}
-{#                            <tr>#}
-{#                                <td>{{ annuel.dateFacture|date('Y') }}</td>#}
-{#                                <td>{{ annuel.nomPrenom }}</td>#}
-{#                                <td>{{ annuel.name }}</td>#}
-{#                                <td>{{ annuel.total }}€</td>#}
-{#                            </tr>#}
-{#                        {% endfor %}#}
+                        {% for interventionAnnuelle in interventionsAnnuelles %}
+                            <tr>
+                                <td>{{ interventionAnnuelle.Annee }}</td>
+                                <td>{{ interventionAnnuelle.InterventionType }}</td>
+                                <td>{{ interventionAnnuelle.NomPrenom }}</td>
+                                <td>{{ interventionAnnuelle.Total }}€</td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

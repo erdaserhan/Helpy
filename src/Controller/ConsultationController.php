@@ -57,7 +57,7 @@ class ConsultationController extends AbstractController
                     return true;
                 }
                 return $beneficiaire->getAge($annee.'-01-01') <= 25
-                    && $beneficiaire->getDateNaissance()?->format('Y') <= $annee;
+                    && $beneficiaire->getDateNaissance()->format('Y') <= $annee;
             }
         )->map(
             function (Beneficiaire $beneficiaire) use ($interventionRepository, $annee): array {
@@ -65,19 +65,21 @@ class ConsultationController extends AbstractController
                 $max = ($age < 14) ? Intervention::MAX_REMBOURSEMENT_VACANCES_ENFANT : Intervention::MAX_REMBOURSEMENT_VACANCES_ADO;
                 return [
                     'beneficiaire' => $beneficiaire,
-                    'totalRemboursements' => $interventionRepository->getTotalRemboursementsVacancesByYear($beneficiaire),
+                    'totalRemboursements' => $interventionRepository->getTotalRemboursementsVacancesByYear($beneficiaire, (int)$annee),
                     'max' => $max,
                 ];
             }
         ) ?? new ArrayCollection();
 
+        $interventionsAnnuelles = $interventionRepository->getInterventionsByYear((int) $personnelId);
+
         return $this->render('consultation/index.html.twig', [
             'form' => $form->createView(),
             'personnel' => $personnelId,
-            'personnelObject' => $personnel,
             'maxRemboursementLunettes' => Intervention::MAX_REMBOURSEMENT_LUNETTES,
             'soldesLunettes' => $soldesLunettes,
             'soldesVacances' => $soldesVacances,
+            'interventionsAnnuelles' => $interventionsAnnuelles,
             'annee' => $annee
         ]);
     }
