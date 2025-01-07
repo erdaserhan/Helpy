@@ -17,10 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/personnels')]
+#[Route('/personnel')]
 final class PersonnelsController extends AbstractController
 {
-    #[Route(name: 'app_personnels_index', methods: ['GET'])]
+    #[Route(name: 'app_personnel_index', methods: ['GET'])]
     public function index(
         PersonnelRepository $personnelRepository,
         Request $request

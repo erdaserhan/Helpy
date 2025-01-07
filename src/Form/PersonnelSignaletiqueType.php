@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
 
-class PersonnelsType extends AbstractType
+class PersonnelSignaletiqueType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

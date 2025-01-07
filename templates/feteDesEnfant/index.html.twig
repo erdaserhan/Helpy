@@ -1,0 +1,26 @@
+<h1>Fête des enfants {{annee}}</h1>
+
+{% if enfants|length > 0 %}
+<table border="1" cellspacing="0" cellpadding="2">
+    <thead>
+        <th>nom et prénom de l'enfant</th>
+        <th>date de naissance de l'enfant</th>
+        <th>age</th>
+        <th>nom du parent</th>
+        <th>prénom du parent</th>
+    </thead>
+    <tbody>
+    {% for enfant in enfants|sort((a, b) => a.nomPrenom <=> b.nomPrenom) %}
+        <tr>
+            <td>{{enfant.nomPrenom}}</td>
+            <td>{% if enfant.dateNaissance %}{{enfant.dateNaissance|date('d/m/Y')}}{% endif %}</td>
+            <td>{% if enfant.age %}{{enfant.getAge(dateDeReference)}}{% endif %}</td>
+            <td>{{enfant.personnel.nom}}</td>
+            <td>{{enfant.personnel.prenom}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+Aucune résultat pour cette année
+{% endif %}
